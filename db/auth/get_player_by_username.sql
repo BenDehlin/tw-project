@@ -1,0 +1,1 @@
+SELECT * FROM tw_players WHERE username = $1;

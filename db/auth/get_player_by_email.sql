@@ -1,0 +1,1 @@
+SELECT * FROM tw_players WHERE email = $1;
