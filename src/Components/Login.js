@@ -2,6 +2,11 @@ import React from "react"
 import useInput from "../hooks/useInput"
 import axios from "axios"
 import toast from "react-toastify"
+import {createUseStyles} from 'react-jss'
+
+const useStyles = createUseStyles({
+  loginStyle: {},
+})
 
 const Login = props => {
   const [{ username, password }, setValues] = useInput({
