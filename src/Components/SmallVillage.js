@@ -14,9 +14,12 @@ const useStyles = createUseStyles({
 
 const SmallVillage = ({ village, setCurrentVillage, i }) => {
   const { smallVillageStyle } = useStyles()
+  // console.log({village})
+  // console.log("x: " + village.x_coord)
+  // console.log("y: " + village.y_coord)
   return (
     <div onClick={() => setCurrentVillage(i)} className={smallVillageStyle}>
-      {village.village_name}
+      {village.village_name} [{village.x_coord}, {village.y_coord}]
     </div>
   )
 }

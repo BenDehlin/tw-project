@@ -3,7 +3,7 @@ import axios from "axios"
 
 const useAxios = ({ url, callback, initialData }) => {
   const [axiosData, setAxiosData] = useState(initialData || [])
-  console.log({axiosData})
+  // console.log({axiosData})
   useEffect(() => {
     axios
       .get(url)

@@ -11,9 +11,16 @@ username VARCHAR(150) NOT NULL,
 email VARCHAR(250) NOT NULL,
 hash VARCHAR(2500) NOT NULL);
 
+-- CREATE TABLE tw_map
+-- (map_id SERIAL PRIMARY KEY,
+-- x_coord INTEGER,
+-- y_coord INTEGER);
+
 CREATE TABLE tw_villages
 (village_id SERIAL PRIMARY KEY,
 player_id INTEGER REFERENCES tw_players(player_id),
+x_coord INTEGER,
+y_coord INTEGER,
 village_name VARCHAR(150) NOT NULL,
 village_image VARCHAR(250));
 
