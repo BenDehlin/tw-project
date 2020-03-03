@@ -1,0 +1,1 @@
+SELECT * FROM tw_villages WHERE village_id = $1;

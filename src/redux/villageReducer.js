@@ -7,12 +7,10 @@ const initialState = {
 }
 
 export function setVillage(payload){
-  console.log('hit setVillage')
   return {type: SET_VILLAGE, payload}
 }
 
 export function setVillages(payload){
-  console.log('hit setVillages')
   return {type: SET_VILLAGES, payload}
 }
 

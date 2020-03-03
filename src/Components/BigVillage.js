@@ -15,8 +15,16 @@ const BigVillage = ({village_id, setVillage}) => {
     callback: setVillage,
     initialData: {}
   })
+  console.log({village})
   return (
-    <div className={bigVillageStyle}>{village.village_name}</div>
+    <div className={bigVillageStyle}>
+      <h1>{village.village_name}</h1>
+      <div>{village.buildings && village.buildings.map(building => (
+        <h3 key={building.tw_village_building_link_id}>
+          {building.building_name}
+        </h3>
+      ))} </div>
+    </div>
   )
 }
 
