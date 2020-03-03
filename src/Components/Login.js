@@ -1,25 +1,31 @@
 import React from "react"
 import useInput from "../hooks/useInput"
 import axios from "axios"
-import toast from "react-toastify"
+import {toast} from "react-toastify"
+import {connect} from 'react-redux'
+import {setPlayer} from '../redux/authReducer'
 import {createUseStyles} from 'react-jss'
 
 const useStyles = createUseStyles({
   loginStyle: {},
 })
 
-const Login = props => {
+const Login = ({setPlayer, history}) => {
+  const {loginStyle} = useStyles()
   const [{ username, password }, setValues] = useInput({
     username: "",
     password: ""
   })
   const login = () => {
-    // axios.post('/auth/login')
-    // .then(results => setPlayer(results.data))
-    // .catch(err => toast.error(err.response.data))
+    axios.post('/auth/login', {username, password})
+    .then(results => {
+      setPlayer(results.data)
+      history.push('/')
+    })
+    .catch(err => toast.error(err.response.data))
   }
   return (
-    <div>
+    <div className={loginStyle}>
       <form
         onSubmit={e => {
           e.preventDefault()
@@ -46,4 +52,4 @@ const Login = props => {
   )
 }
 
-export default Login
+export default connect(null, {setPlayer})(Login)

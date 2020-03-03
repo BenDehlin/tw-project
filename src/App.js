@@ -6,7 +6,10 @@ import Header from './Components/Header'
 import {createUseStyles} from 'react-jss'
 
 const useStyles = createUseStyles({
-  appStyle: {},
+  appStyle: {
+    width: '100%',
+    minHeight: '100vh'
+  },
 })
 
 

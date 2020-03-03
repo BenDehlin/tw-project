@@ -14,6 +14,7 @@ const {
 
 //CONTROLLERS
 const authCtrl = require('./controllers/authController')
+const villageCtrl = require('./controllers/villageController')
 
 //MIDDLEWARE
 const authMid = require('./middleware/authMiddleware')
@@ -42,3 +43,7 @@ app.post("/auth/register", authCtrl.register)
 app.post("/auth/login", authCtrl.login)
 app.post("/auth/logout", authCtrl.logout)
 app.get("/auth/user", authCtrl.getUser)
+
+//VILLAGE ENDPOINTS
+app.get('/api/villages/:player_id', authMid.usersOnly, villageCtrl.getPlayerVillages)
+app.get('/api/village/:village_id', authMid.usersOnly, villageCtrl.getVillageInfo)

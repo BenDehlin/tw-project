@@ -1,13 +1,20 @@
-import {useState, useEffect} from 'react'
-import axios from 'axios'
+import { useState, useEffect } from "react"
+import axios from "axios"
 
-const useAxios = (url, initialData = []) => {
-  const [axiosData, setAxiosData] = useState(initialData)
+const useAxios = ({ url, callback, initialData }) => {
+  const [axiosData, setAxiosData] = useState(initialData || [])
+  console.log({axiosData})
   useEffect(() => {
-    axios.get(url)
-    .then(results => setAxiosData(results.data))
-    .catch(err => console.log(err))
-  }, [url])
+    axios
+      .get(url)
+      .then(results => {
+        setAxiosData(results.data)
+        if (callback) {
+          callback(results.data)
+        }
+      })
+      .catch(err => console.log(err))
+  }, [url, callback])
   return [axiosData, setAxiosData]
 }
 

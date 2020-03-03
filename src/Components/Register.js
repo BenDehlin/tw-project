@@ -1,15 +1,32 @@
 import React from "react"
 import useInput from "../hooks/useInput"
+import axios from "axios"
+import {toast} from "react-toastify"
+import {connect} from 'react-redux'
+import {setPlayer} from '../redux/authReducer'
+import {createUseStyles} from 'react-jss'
 
-const Register = props => {
+const useStyles = createUseStyles({
+  registerStyle: {}
+})
+
+const Register = ({setPlayer, history}) => {
+  const {registerStyle} = useStyles()
   const [{ username, email, password }, setValues] = useInput({
     username: "",
     email: "",
     password: ""
   })
-  const register = () => {}
+  const register = () => {
+    axios.post('/auth/register', {username, email, password})
+    .then(results => {
+      setPlayer(results.data)
+      history.push('/')
+    })
+    .catch(err => toast.error(err.response.data))
+  }
   return (
-    <div>
+    <div className={registerStyle}>
       <form
         onSubmit={e => {
           e.preventDefault()
@@ -51,4 +68,4 @@ const Register = props => {
   )
 }
 
-export default Register
+export default connect(null, {setPlayer})(Register)
