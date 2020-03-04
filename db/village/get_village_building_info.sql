@@ -1,6 +1,7 @@
 SELECT * FROM tw_buildings b
 JOIN tw_village_building_link vb ON (b.building_id = vb.building_id)
-WHERE vb.village_id = $1;
+WHERE vb.village_id = $1
+ORDER BY b.building_id ASC;
 
 -- SELECT * FROM tw_villages v
 -- LEFT JOIN tw_village_building_link vb ON (v.village_id = vb.village_id)

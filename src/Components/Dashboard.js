@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import axios from "axios"
 import { createUseStyles } from "react-jss"
 import { connect } from "react-redux"
 import useCheckPlayer from "../hooks/useCheckPlayer"
@@ -27,33 +28,53 @@ const Dashboard = ({ player, history, setVillages }) => {
     url: `/api/villages/${player.player_id}`,
     callback: setVillages
   })
-  const { dashboardStyle, sideSection } = useStyles()
   const [currentVillage, setCurrentVillage] = useState(0)
-  const setVillage = village_id => {
+  const [village, setVillage] = useState({
+    village_id: "",
+    village_name: "",
+    x_coord: null,
+    y_coord: null
+  })
+  useEffect(() => {
+    if (villages && villages[0] && villages[0].village_id) {
+      axios
+        .get(`/api/village/${villages[currentVillage].village_id}`)
+        .then(results => {
+          setVillage(results.data)
+        })
+        .catch(err => console.log(err))
+    }
+  }, [villages, currentVillage])
+
+  const { dashboardStyle, sideSection } = useStyles()
+  const setLocalVillage = village_id => {
     const index = villages.findIndex(
       village => village.village_id === village_id
     )
     setCurrentVillage(index)
   }
-  // console.log(currentVillage)
+  // console.log(villages)
   return (
     <div className={dashboardStyle}>
       <div className={sideSection}>
         <div>{player.username}</div>
-        {villages[currentVillage] && (
-          <BigVillage village_id={villages[currentVillage].village_id} />
-          // <BigVillage village_id={village.village_id} />
+        {village && village.village_id && (
+          <BigVillage village={village} />
         )}
       </div>
       <div className={sideSection}>
-        <MiniMap villages={villages} setVillage={setVillage} currentVillage={currentVillage} />
+        <MiniMap
+          villages={villages}
+          setVillage={setLocalVillage}
+          village={village}
+        />
         {villages &&
-          villages.map((village, i) => (
+          villages.map((vill, i) => (
             <SmallVillage
-              key={village.village_id}
-              setCurrentVillage={setCurrentVillage}
-              village={village}
-              i={i}
+              key={vill.village_id}
+              setVillage={setLocalVillage}
+              village={vill}
+              activeVillage={village}
             />
           ))}
       </div>
@@ -63,7 +84,6 @@ const Dashboard = ({ player, history, setVillages }) => {
 
 const mapStateToProps = state => {
   const { player } = state.authReducer
-  // const {village} = state.villageReducer
   return { player }
 }
 

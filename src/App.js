@@ -1,7 +1,10 @@
-import React from "react"
+import React, {useEffect} from "react"
 import "./App.css"
+import axios from 'axios'
 import routes from './routes'
 import Header from './Components/Header'
+import {connect} from 'react-redux'
+import {setPlayer} from './redux/authReducer'
 
 import {createUseStyles} from 'react-jss'
 
@@ -13,7 +16,12 @@ const useStyles = createUseStyles({
 })
 
 
-function App() {
+function App({setPlayer}) {
+  useEffect(() => {
+    axios.get('/auth/user').then(results => {
+      setPlayer(results.data)
+    })
+  }, [setPlayer])
   const {appStyle} = useStyles()
   return <div className={appStyle}>
     <Header />
@@ -21,4 +29,4 @@ function App() {
   </div>
 }
 
-export default App
+export default connect(null, {setPlayer})(App)

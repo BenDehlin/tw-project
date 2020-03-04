@@ -12,19 +12,19 @@ const useStyles = createUseStyles({
   }
 })
 
-const MiniMap = ({ villages, setVillage, currentVillage }) => {
+const MiniMap = ({ villages, setVillage, village }) => {
   const [grid, setGrid] = useState([])
   useEffect(() => {
     let genGrid = []
-    for (let x = 0; x < 10; x++) {
+    for (let y = 0; y < 10; y++) {
       genGrid.push([])
-      for (let y = 0; y < 10; y++) {
-        genGrid[x].push({ x, y, villageHere: false, village_id: null })
+      for (let x = 0; x < 10; x++) {
+        genGrid[y].push({ x, y, villageHere: false, village_id: null })
       }
     }
     for (let i = 0; i < villages.length; i++) {
-        genGrid[villages[i].x_coord][villages[i].y_coord].villageHere = true
-        genGrid[villages[i].x_coord][villages[i].y_coord].village_id = villages[i].village_id
+        genGrid[villages[i].y_coord][villages[i].x_coord].villageHere = true
+        genGrid[villages[i].y_coord][villages[i].x_coord].village_id = villages[i].village_id
         
     }
     setGrid(genGrid)
@@ -41,10 +41,10 @@ const MiniMap = ({ villages, setVillage, currentVillage }) => {
       }}
     >
       {grid &&
-        grid.map((row, rowIndex) =>
-          row.map((cell, cellIndex) => {
+        grid.map((column, columnIndex) =>
+          column.map((cell, cellIndex) => {
             return (
-              <div key = {`${rowIndex}-${cellIndex}`}
+              <div key = {`${columnIndex}-${cellIndex}`}
                 style={{
                   border: "1px solid white",
                   color: "white",
@@ -54,6 +54,7 @@ const MiniMap = ({ villages, setVillage, currentVillage }) => {
                 }}
                 onClick = {() => cell.village_id && setVillage(cell.village_id)}
               >
+                <div style={{width: '100%', height: '100%', backgroundColor: cell.village_id === village.village_id && 'green'}}></div>
               </div>
             )
           })
