@@ -12,7 +12,7 @@ const useStyles = createUseStyles({
   }
 })
 
-const MiniMap = ({ villages, otherVillages, setVillage, village }) => {
+const MiniMap = ({ villages, otherVillages, setVillage, village, calculateDistance }) => {
   const [grid, setGrid] = useState([])
   useEffect(() => {
     let genGrid = []
@@ -37,9 +37,15 @@ const MiniMap = ({ villages, otherVillages, setVillage, village }) => {
       genGrid[otherVillages[j].y_coord][
         otherVillages[j].x_coord
       ].otherVillageHere = true
+      genGrid[otherVillages[j].y_coord][otherVillages[j].x_coord].village_id =
+        otherVillages[j].village_id
     }
     setGrid(genGrid)
   }, [villages])
+  const rightClick = (e, x_coord, y_coord) => {
+    e.preventDefault()
+    calculateDistance({x_coord, y_coord})
+  }
   const { miniMapStyle } = useStyles()
   return (
     <div
@@ -65,6 +71,7 @@ const MiniMap = ({ villages, otherVillages, setVillage, village }) => {
                   backgroundColor: cell.villageHere && "blue"
                 }}
                 onClick={() => cell.village_id && setVillage(cell.village_id)}
+                onContextMenu={(e) => rightClick(e, cell.x, cell.y)}
               >
                 <div
                   style={{

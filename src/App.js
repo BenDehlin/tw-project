@@ -5,6 +5,7 @@ import routes from './routes'
 import Header from './Components/Header'
 import {connect} from 'react-redux'
 import {setPlayer} from './redux/authReducer'
+import {ToastContainer} from 'react-toastify'
 
 import {createUseStyles} from 'react-jss'
 
@@ -26,6 +27,7 @@ function App({setPlayer}) {
   return <div className={appStyle}>
     <Header />
     {routes}
+    <ToastContainer />
   </div>
 }
 

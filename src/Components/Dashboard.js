@@ -7,6 +7,8 @@ import useAxios from "../hooks/useAxios"
 import SmallVillage from "./SmallVillage"
 import BigVillage from "./BigVillage"
 import MiniMap from "./MiniMap"
+import {toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { setVillages, setVillage } from "../redux/villageReducer"
 
 const useStyles = createUseStyles({
@@ -54,7 +56,14 @@ const Dashboard = ({ player, history, setVillages }) => {
     )
     setCurrentVillage(index)
   }
-  console.log(villages)
+  const calculateDistance = ({x_coord, y_coord}) => {
+    const x_distance = Math.max(x_coord, village.x_coord) - Math.min(x_coord, village.x_coord)
+    const y_distance = Math.max(y_coord, village.y_coord) - Math.min(y_coord, village.y_coord)
+    // + Math.abs(Math.pow(village.x_coord, 2))
+    // + Math.abs(Math.pow(village.y_coord, 2))
+    const z_distance = Math.sqrt(Math.pow(x_distance, 2) + Math.pow(y_distance, 2))
+    toast.success(`X: ${x_coord} Y: ${y_coord} is ${z_distance} distance away`, {position: toast.POSITION.TOP_CENTER})
+  }
   return (
     <div className={dashboardStyle}>
       <div className={sideSection}>
@@ -69,6 +78,7 @@ const Dashboard = ({ player, history, setVillages }) => {
           otherVillages={otherVillages}
           setVillage={setLocalVillage}
           village={village}
+          calculateDistance={calculateDistance}
         />
         {villages &&
           villages.map((vill, i) => (
