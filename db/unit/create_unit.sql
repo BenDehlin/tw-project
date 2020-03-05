@@ -1,0 +1,2 @@
+INSERT INTO tw_units (name, building_id, attack, defense, health, build_time, pop_cost, gold_cost, move_speed)
+VALUES (${name}, ${building_id}, ${attack}, ${defense}, ${health}, ${build_time}, ${pop_cost}, ${gold_cost}, ${move_speed});

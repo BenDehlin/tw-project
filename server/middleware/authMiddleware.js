@@ -1,5 +1,5 @@
 module.exports = {
-  usersOnly: (req, res, next) => {
+  playersOnly: (req, res, next) => {
     if (!req.session.player) {
       return res.status(401).send("User not logged in")
     }

@@ -24,9 +24,10 @@ const useStyles = createUseStyles({
 
 const Dashboard = ({ player, history, setVillages }) => {
   useCheckPlayer(player, history.push)
-  const [villages] = useAxios({
+  const [{villages, otherVillages}] = useAxios({
     url: `/api/villages/${player.player_id}`,
-    callback: setVillages
+    callback: setVillages,
+    initialData: {villages: [], otherVillages: []}
   })
   const [currentVillage, setCurrentVillage] = useState(0)
   const [village, setVillage] = useState({
@@ -53,7 +54,7 @@ const Dashboard = ({ player, history, setVillages }) => {
     )
     setCurrentVillage(index)
   }
-  // console.log(villages)
+  console.log(villages)
   return (
     <div className={dashboardStyle}>
       <div className={sideSection}>
@@ -65,6 +66,7 @@ const Dashboard = ({ player, history, setVillages }) => {
       <div className={sideSection}>
         <MiniMap
           villages={villages}
+          otherVillages={otherVillages}
           setVillage={setLocalVillage}
           village={village}
         />

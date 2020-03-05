@@ -19,7 +19,7 @@ module.exports = {
       email,
       hash
     })
-    delete user[0].hash
+    delete player[0].hash
     req.session.player = player[0]
     return res.status(200).send(req.session.player)
   },

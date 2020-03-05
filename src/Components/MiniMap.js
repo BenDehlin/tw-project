@@ -12,20 +12,31 @@ const useStyles = createUseStyles({
   }
 })
 
-const MiniMap = ({ villages, setVillage, village }) => {
+const MiniMap = ({ villages, otherVillages, setVillage, village }) => {
   const [grid, setGrid] = useState([])
   useEffect(() => {
     let genGrid = []
     for (let y = 0; y < 10; y++) {
       genGrid.push([])
       for (let x = 0; x < 10; x++) {
-        genGrid[y].push({ x, y, villageHere: false, village_id: null })
+        genGrid[y].push({
+          x,
+          y,
+          villageHere: false,
+          otherVillageHere: false,
+          village_id: null
+        })
       }
     }
     for (let i = 0; i < villages.length; i++) {
-        genGrid[villages[i].y_coord][villages[i].x_coord].villageHere = true
-        genGrid[villages[i].y_coord][villages[i].x_coord].village_id = villages[i].village_id
-        
+      genGrid[villages[i].y_coord][villages[i].x_coord].villageHere = true
+      genGrid[villages[i].y_coord][villages[i].x_coord].village_id =
+        villages[i].village_id
+    }
+    for (let j = 0; j < otherVillages.length; j++) {
+      genGrid[otherVillages[j].y_coord][
+        otherVillages[j].x_coord
+      ].otherVillageHere = true
     }
     setGrid(genGrid)
   }, [villages])
@@ -44,7 +55,8 @@ const MiniMap = ({ villages, setVillage, village }) => {
         grid.map((column, columnIndex) =>
           column.map((cell, cellIndex) => {
             return (
-              <div key = {`${columnIndex}-${cellIndex}`}
+              <div
+                key={`${columnIndex}-${cellIndex}`}
                 style={{
                   border: "1px solid white",
                   color: "white",
@@ -52,9 +64,24 @@ const MiniMap = ({ villages, setVillage, village }) => {
                   width: "100%",
                   backgroundColor: cell.villageHere && "blue"
                 }}
-                onClick = {() => cell.village_id && setVillage(cell.village_id)}
+                onClick={() => cell.village_id && setVillage(cell.village_id)}
               >
-                <div style={{width: '100%', height: '100%', backgroundColor: cell.village_id === village.village_id && 'green'}}></div>
+                <div
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: cell.otherVillageHere && "red"
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      backgroundColor:
+                        cell.village_id === village.village_id && "green"
+                    }}
+                  ></div>
+                </div>
               </div>
             )
           })

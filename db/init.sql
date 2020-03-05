@@ -32,11 +32,15 @@ building_image VARCHAR(250));
 
 CREATE TABLE tw_units
 (unit_id SERIAL PRIMARY KEY,
-unit_name VARCHAR(150) NOT NULL,
-unit_max_level INTEGER NOT NULL,
+building_id INTEGER REFERENCES tw_buildings(building_id),
+name VARCHAR(150) NOT NULL,
 attack INTEGER NOT NULL,
 defense INTEGER NOT NULL,
 health INTEGER NOT NULL,
+build_time INTEGER NOT NULL,
+pop_cost INTEGER NOT NULL,
+gold_cost INTEGER NOT NULL,
+move_speed INTEGER NOT NULL,
 unit_image VARCHAR(250));
 
 CREATE TABLE tw_village_building_link
