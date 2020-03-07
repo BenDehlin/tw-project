@@ -5,7 +5,7 @@ const useStyles = createUseStyles({
   bigVillageStyle: {}
 })
 
-const BigVillage = ({ village }) => {
+const BigVillage = ({ village, history }) => {
   const { bigVillageStyle } = useStyles()
   console.log(village.units)
   return (
@@ -18,9 +18,20 @@ const BigVillage = ({ village }) => {
         <h3>Buildings:</h3>
         {village.buildings &&
           village.buildings.map(building => (
-            <h4 key={building.tw_village_building_link_id}>
-              {building.building_name}
-            </h4>
+            <div
+              onClick={() => {
+                history.push(
+                  `/village/${building.building_name
+                    .split(" ")
+                    .join("")
+                    .toLowerCase()}`
+                )
+              }}
+            >
+              <h4 key={building.tw_village_building_link_id}>
+                {building.building_name}
+              </h4>
+            </div>
           ))}{" "}
       </div>
       <div>

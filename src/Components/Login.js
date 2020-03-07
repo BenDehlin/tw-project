@@ -20,7 +20,7 @@ const Login = ({setPlayer, history}) => {
     axios.post('/auth/login', {username, password})
     .then(results => {
       setPlayer(results.data)
-      history.push('/')
+      history.push('/village')
     })
     .catch(err => toast.error(err.response.data))
   }

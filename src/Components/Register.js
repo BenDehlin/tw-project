@@ -26,7 +26,7 @@ const Register = ({ setPlayer, history }) => {
         setValues({target:{name: 'username', value: ''}})
         setValues({name: 'email', value: ''})
         setValues({name: 'password', value: ''})
-        history.push("/")
+        history.push("/village")
       })
       .catch(err => toast.error(err.response.data))
   }

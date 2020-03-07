@@ -5,11 +5,18 @@ import { connect } from "react-redux"
 import useCheckPlayer from "../hooks/useCheckPlayer"
 import useAxios from "../hooks/useAxios"
 import SmallVillage from "./SmallVillage"
-import BigVillage from "./BigVillage"
+import BuildingRoutes from "./Buildings/BuildingRoutes"
 import MiniMap from "./MiniMap"
-import {toast} from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+// import BigVillage from "./BigVillage"
+// import Barracks from "./Buildings/Barracks"
+// import Stable from "./Buildings/Stable"
+// import TownCenter from "./Buildings/TownCenter"
+// import Farm from "./Buildings/Farm"
+// import Mine from "./Buildings/Mine"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import { setVillages, setVillage } from "../redux/villageReducer"
+// import { Switch, Route } from "react-router-dom"
 
 const useStyles = createUseStyles({
   dashboardStyle: {
@@ -26,10 +33,10 @@ const useStyles = createUseStyles({
 
 const Dashboard = ({ player, history, setVillages }) => {
   useCheckPlayer(player, history.push)
-  const [{villages, otherVillages}] = useAxios({
+  const [{ villages, otherVillages }] = useAxios({
     url: `/api/villages/${player.player_id}`,
     callback: setVillages,
-    initialData: {villages: [], otherVillages: []}
+    initialData: { villages: [], otherVillages: [] }
   })
   const [currentVillage, setCurrentVillage] = useState(0)
   const [village, setVillage] = useState({
@@ -56,21 +63,26 @@ const Dashboard = ({ player, history, setVillages }) => {
     )
     setCurrentVillage(index)
   }
-  const calculateDistance = ({x_coord, y_coord}) => {
-    const x_distance = Math.max(x_coord, village.x_coord) - Math.min(x_coord, village.x_coord)
-    const y_distance = Math.max(y_coord, village.y_coord) - Math.min(y_coord, village.y_coord)
+  const calculateDistance = ({ x_coord, y_coord }) => {
+    const x_distance =
+      Math.max(x_coord, village.x_coord) - Math.min(x_coord, village.x_coord)
+    const y_distance =
+      Math.max(y_coord, village.y_coord) - Math.min(y_coord, village.y_coord)
     // + Math.abs(Math.pow(village.x_coord, 2))
     // + Math.abs(Math.pow(village.y_coord, 2))
-    const z_distance = Math.sqrt(Math.pow(x_distance, 2) + Math.pow(y_distance, 2))
-    toast.success(`X: ${x_coord} Y: ${y_coord} is ${z_distance} distance away`, {position: toast.POSITION.TOP_CENTER})
+    const z_distance = Math.sqrt(
+      Math.pow(x_distance, 2) + Math.pow(y_distance, 2)
+    )
+    toast.success(
+      `X: ${x_coord} Y: ${y_coord} is ${z_distance} distance away`,
+      { position: toast.POSITION.TOP_CENTER }
+    )
   }
   return (
     <div className={dashboardStyle}>
       <div className={sideSection}>
         <div>{player.username}</div>
-        {village && village.village_id && (
-          <BigVillage village={village} />
-        )}
+        {village && village.village_id && <BuildingRoutes village={village} />}
       </div>
       <div className={sideSection}>
         <MiniMap
