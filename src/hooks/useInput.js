@@ -2,11 +2,20 @@ import { useState } from "react"
 
 const useInput = initialState => {
   const [values, setValues] = useState(initialState)
-  return [values, (e) => {
+  return [values, ({target}) => {
     setValues({
       ...values,
-      [e.target.name]: e.target.value
+      [target.name]: target.value
     })
+  }, () => {
+    for(let key in values){
+
+      setValues({[key]: ''})
+    }
+  }, () => {
+    for(let key in values){
+      setValues({[key]: ''})
+    }
   }]
 }
 

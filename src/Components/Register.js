@@ -1,39 +1,38 @@
 import React from "react"
 import useInput from "../hooks/useInput"
 import axios from "axios"
-import {toast} from "react-toastify"
-import {connect} from 'react-redux'
-import {setPlayer} from '../redux/authReducer'
-import {createUseStyles} from 'react-jss'
+import { toast } from "react-toastify"
+import { connect } from "react-redux"
+import { setPlayer } from "../redux/authReducer"
+import { createUseStyles } from "react-jss"
 
 const useStyles = createUseStyles({
   registerStyle: {}
 })
 
-const Register = ({setPlayer, history}) => {
-  const {registerStyle} = useStyles()
+const Register = ({ setPlayer, history }) => {
+  const { registerStyle } = useStyles()
   const [{ username, email, password }, setValues] = useInput({
     username: "",
     email: "",
     password: ""
   })
-  const register = () => {
-    axios.post('/auth/register', {username, email, password})
-    .then(results => {
-      setPlayer(results.data)
-      history.push('/')
-    })
-    .catch(err => toast.error(err.response.data))
+  const register = e => {
+    e.preventDefault()
+    axios
+      .post("/auth/register", { username, email, password })
+      .then(results => {
+        setPlayer(results.data)
+        setValues({target:{name: 'username', value: ''}})
+        setValues({name: 'email', value: ''})
+        setValues({name: 'password', value: ''})
+        history.push("/")
+      })
+      .catch(err => toast.error(err.response.data))
   }
   return (
     <div className={registerStyle}>
-      <form
-        onSubmit={e => {
-          e.preventDefault()
-          console.log(`Username: ${username} Password: ${password}`)
-          register()
-        }}
-      >
+      <form onSubmit={e => register(e)}>
         <input
           name="username"
           value={username}
@@ -68,4 +67,4 @@ const Register = ({setPlayer, history}) => {
   )
 }
 
-export default connect(null, {setPlayer})(Register)
+export default connect(null, { setPlayer })(Register)
