@@ -7,7 +7,6 @@ const useStyles = createUseStyles({
 
 const BigVillage = ({ village, history }) => {
   const { bigVillageStyle } = useStyles()
-  console.log(village.units)
   return (
     <div className={bigVillageStyle}>
       <h1>{village.village_name}</h1>

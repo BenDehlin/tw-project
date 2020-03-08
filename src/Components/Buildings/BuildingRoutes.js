@@ -1,5 +1,5 @@
 import React from "react"
-import { Switch, Route } from "react-router-dom"
+import { Route } from "react-router-dom"
 import BigVillage from "../BigVillage"
 import Barracks from "./Barracks"
 import Stable from "./Stable"
