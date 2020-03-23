@@ -14,9 +14,10 @@ const useStyles = createUseStyles({
 
 const SmallVillage = ({ village, setVillage, activeVillage }) => {
   const { smallVillageStyle } = useStyles()
+  const {village_id, village_name, x_coord, y_coord} = village
   return (
-    <div onClick={() => setVillage(village.village_id)} className={smallVillageStyle} style={{backgroundColor: village.village_id === activeVillage.village_id && 'green'}}>
-      {village.village_name} [{village.x_coord}, {village.y_coord}]
+    <div onClick={() => setVillage(village_id)} className={smallVillageStyle} style={{backgroundColor: village_id === activeVillage.village_id && 'green'}}>
+      {village_name} [{x_coord}, {y_coord}]
     </div>
   )
 }
