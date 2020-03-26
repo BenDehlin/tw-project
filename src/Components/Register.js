@@ -23,16 +23,16 @@ const Register = ({ setPlayer, history }) => {
       .post("/auth/register", { username, email, password })
       .then(results => {
         setPlayer(results.data)
-        setValues({target:{name: 'username', value: ''}})
-        setValues({name: 'email', value: ''})
-        setValues({name: 'password', value: ''})
+        setValues({ target: { name: "username", value: "" } })
+        setValues({ name: "email", value: "" })
+        setValues({ name: "password", value: "" })
         history.push("/village")
       })
       .catch(err => toast.error(err.response.data))
   }
   return (
     <div className={registerStyle}>
-      <form onSubmit={e => register(e)}>
+      <form onSubmit={register}>
         <input
           name="username"
           value={username}

@@ -7,16 +7,9 @@ import useAxios from "../hooks/useAxios"
 import SmallVillage from "./SmallVillage"
 import BuildingRoutes from "./Buildings/BuildingRoutes"
 import MiniMap from "./MiniMap"
-// import BigVillage from "./BigVillage"
-// import Barracks from "./Buildings/Barracks"
-// import Stable from "./Buildings/Stable"
-// import TownCenter from "./Buildings/TownCenter"
-// import Farm from "./Buildings/Farm"
-// import Mine from "./Buildings/Mine"
 import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { setVillages, setVillage } from "../redux/villageReducer"
-// import { Switch, Route } from "react-router-dom"
 
 const useStyles = createUseStyles({
   dashboardStyle: {
@@ -31,7 +24,7 @@ const useStyles = createUseStyles({
   }
 })
 
-const Dashboard = ({ player, history, setVillages }) => {
+const Dashboard = ({ village, player, history, setVillages, setVillage }) => {
   useCheckPlayer(player, history.push)
   const [{ villages, otherVillages }] = useAxios({
     url: `/api/villages/${player.player_id}`,
@@ -39,12 +32,12 @@ const Dashboard = ({ player, history, setVillages }) => {
     initialData: { villages: [], otherVillages: [] }
   })
   const [currentVillage, setCurrentVillage] = useState(0)
-  const [village, setVillage] = useState({
-    village_id: "",
-    village_name: "",
-    x_coord: null,
-    y_coord: null
-  })
+  // const [village, setVillage] = useState({
+  //   village_id: "",
+  //   village_name: "",
+  //   x_coord: null,
+  //   y_coord: null
+  // })
   useEffect(() => {
     if (villages && villages[0] && villages[0].village_id) {
       axios
@@ -82,7 +75,9 @@ const Dashboard = ({ player, history, setVillages }) => {
     <div className={dashboardStyle}>
       <div className={sideSection}>
         <div>{player.username}</div>
-        {village && village.village_id && <BuildingRoutes village={village} />}
+        {village && village.village_id && <BuildingRoutes 
+        // village={village}
+         />}
       </div>
       <div className={sideSection}>
         <MiniMap
@@ -106,9 +101,10 @@ const Dashboard = ({ player, history, setVillages }) => {
   )
 }
 
-const mapStateToProps = state => {
-  const { player } = state.authReducer
-  return { player }
+const mapStateToProps = ({ authReducer, villageReducer }) => {
+  const { player } = authReducer
+  const { village } = villageReducer
+  return { player, village }
 }
 
 export default connect(mapStateToProps, { setVillages, setVillage })(Dashboard)

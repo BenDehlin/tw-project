@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from "react-redux"
+
 
 const Mine = ({history, village}) => {
   console.log(village)
@@ -10,4 +12,9 @@ const Mine = ({history, village}) => {
   )
 }
 
-export default Mine
+const mapStateToProps = ({ villageReducer }) => {
+  const { village } = villageReducer
+  return { village }
+}
+
+export default connect(mapStateToProps)(Mine)

@@ -1,5 +1,6 @@
 import React from "react"
 import { createUseStyles } from "react-jss"
+import { connect } from "react-redux"
 
 const useStyles = createUseStyles({
   bigVillageStyle: {}
@@ -19,6 +20,7 @@ const BigVillage = ({ village, history }) => {
         {buildings &&
           buildings.map(({ building_name, tw_village_building_link_id }) => (
             <div
+              key={tw_village_building_link_id}
               onClick={() => {
                 history.push(
                   `/village/${building_name
@@ -28,15 +30,16 @@ const BigVillage = ({ village, history }) => {
                 )
               }}
             >
-              <h4 key={tw_village_building_link_id}>{building_name}</h4>
+              <h4>{building_name}</h4>
             </div>
           ))}{" "}
       </div>
       <div>
         <h3>Units:</h3>
         {units &&
-          units.map(({ tw_village_unit_link_id, name, count }) => (
-            <h4 key={tw_village_unit_link_id}>
+          units.map(({ tw_village_unit_link_id, name, count }, index) => (
+            // <h4 key={tw_village_unit_link_id}>
+            <h4 key={index}>
               {name}: {count}
             </h4>
           ))}{" "}
@@ -45,4 +48,9 @@ const BigVillage = ({ village, history }) => {
   )
 }
 
-export default BigVillage
+const mapStateToProps = ({ villageReducer }) => {
+  const { village } = villageReducer
+  return { village }
+}
+
+export default connect(mapStateToProps)(BigVillage)

@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from "react-redux"
+
 
 const Farm = ({history, village}) => {
   console.log(village)
@@ -10,4 +12,9 @@ const Farm = ({history, village}) => {
   )
 }
 
-export default Farm
+const mapStateToProps = ({ villageReducer }) => {
+  const { village } = villageReducer
+  return { village }
+}
+
+export default connect(mapStateToProps)(Farm)

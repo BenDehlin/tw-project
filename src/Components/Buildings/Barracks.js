@@ -1,5 +1,6 @@
 import React from "react"
 import useInput from "../../hooks/useInput"
+import { connect } from "react-redux"
 
 const Barracks = ({ history, village }) => {
   const [{ spearman, warrior }, setValues] = useInput({
@@ -41,4 +42,9 @@ const Barracks = ({ history, village }) => {
   )
 }
 
-export default Barracks
+const mapStateToProps = ({ villageReducer }) => {
+  const { village } = villageReducer
+  return { village }
+}
+
+export default connect(mapStateToProps)(Barracks)
