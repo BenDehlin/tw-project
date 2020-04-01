@@ -6,66 +6,16 @@ import Stable from "./Stable"
 import TownCenter from "./TownCenter"
 import Farm from "./Farm"
 import Mine from "./Mine"
-import { connect } from "react-redux"
 
-const BuildingRoutes = ({village}) => (
+const BuildingRoutes = props => (
   <div>
-    <Route
-      exact
-      path={"/village"}
-      component={BigVillage}
-    //   render={props => <BigVillage {...props} 
-    //   village={village} 
-    //   />
-    // }
-    />
-    <Route
-      path={"/village/barracks"}
-      component={Barracks}
-    //   render={props => <Barracks {...props} 
-    //   village={village} 
-    //   />
-    // }
-    />
-    <Route
-      path={"/village/stable"}
-      component={Stable}
-    //   render={props => <Stable {...props} 
-    //   village={village} 
-    //   />
-    // }
-    />
-    <Route
-      path={"/village/towncenter"}
-      component={TownCenter}
-    //   render={props => <TownCenter {...props} 
-    //   village={village} 
-    //   />
-    // }
-    />
-    <Route
-      path={"/village/farm"}
-      component={Farm}
-    //   render={props => <Farm {...props} 
-    //   village={village} 
-    //   />
-    // }
-    />
-    <Route
-      path={"/village/mine"}
-      component={Mine}
-    //   render={props => <Mine {...props} 
-    //   village={village} 
-    //   />
-    // }
-    />
+    <Route exact path={"/village"} component={BigVillage} />
+    <Route path={"/village/barracks"} component={Barracks} />
+    <Route path={"/village/stable"} component={Stable} />
+    <Route path={"/village/towncenter"} component={TownCenter} />
+    <Route path={"/village/farm"} component={Farm} />
+    <Route path={"/village/mine"} component={Mine} />
   </div>
 )
 
-const mapStateToProps = ({ villageReducer }) => {
-  const { village } = villageReducer
-  return { village }
-}
-
-
-export default connect(mapStateToProps)(BuildingRoutes)
+export default BuildingRoutes
